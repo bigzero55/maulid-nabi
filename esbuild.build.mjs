@@ -1,6 +1,6 @@
 import esbuild from "esbuild";
  
-import svelteInertiaPlugin from "esbuild-svelte-inertia";
+import svelteInertiaPlugin from "esbuild-svelte-inertia"; // https://github.com/inertiajs/inertia-svelte/tree/main/packages/esbuild-svelte-inertia
 import sveltePlugin from "esbuild-svelte";
 
 import { dirname } from 'path';

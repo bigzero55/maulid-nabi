@@ -3,6 +3,8 @@ import AttendeeController from "../app/controllers/AttendeeController";
 import DB from "../app/services/DB";
 import manifest from "../public/manifest.json";
 import { readFileSync } from "fs";
+import PagesController from "../app/controllers/PagesController";
+import ProductsController from "../app/controllers/ProductsController";
 
 const HyperExpress = require("hyper-express");
 
@@ -11,36 +13,37 @@ const Route = new HyperExpress.Router();
 let cache = {};
 
 // guest routes
-Route.get("/", AttendeeController.index);
+Route.get("/", PagesController.home);
 
-Route.post("/attendee", AttendeeController.store); 
+Route.get("/products", PagesController.products);
+Route.post("/products", ProductsController.addProduct);
 
-Route.post("/like", AttendeeController.like); 
+Route.get("/watch", AttendeeController.index);
 
-Route.post("/comment", AttendeeController.comment); 
+Route.post("/attendee", AttendeeController.store);
 
-Route.get("/live-chat",AttendeeController.liveChat)
+Route.post("/like", AttendeeController.like);
+
+Route.post("/comment", AttendeeController.comment);
+
+Route.get("/live-chat", AttendeeController.liveChat);
 
 Route.get("/:file", async (request, response) => {
-   const file = request.params.file;
- 
-   let content = cache[file] ? cache[file] : readFileSync(
-      `./public/${file}`,
-      "utf-8"
-   );
+  const file = request.params.file;
 
-   if(!cache[file])
-   {
+  let content = cache[file]
+    ? cache[file]
+    : readFileSync(`./public/${file}`, "utf-8");
+
+  if (!cache[file]) {
     cache[file] = content;
-   }
-   
+  }
 
+  if (file.endsWith(".css"))
+    return response.header("Content-Type", "text/css").send(content);
 
-   if(file.endsWith(".css"))
-    return response.header("Content-Type","text/css").send(content);
-
-    if(file.endsWith(".js"))
-    return response.header("Content-Type","text/javascript").send(content);
-})
+  if (file.endsWith(".js"))
+    return response.header("Content-Type", "text/javascript").send(content);
+});
 
 export default Route;

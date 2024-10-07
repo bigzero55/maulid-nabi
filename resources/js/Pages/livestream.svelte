@@ -44,6 +44,7 @@
       }
    };
 
+   
    onMount(() => {
       new Plyr("#player");
    });
@@ -107,6 +108,7 @@
       message = "";
 
       message_cooldown = 10;
+      
    }
 </script>
 
@@ -115,7 +117,7 @@
       <div
          class="tutor-video-player-wrapper lg:w-4/5 sticky top-0 z-10 bg-gray-800"
       >
-         <div class="p-4 w-full">LIVE STREAMING MAULID NABI</div>
+         <div class="p-4 w-full">LIVE STREAMING MAULID NABI IDRIS</div>
          <div class="tutor-video-player">
             <div class="loading-spinner" area-hidden="true"></div>
             <div id="player" class="plyr__video-embed tutorPlayer">
